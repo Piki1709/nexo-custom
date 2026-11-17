@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Tipografías: Cormorant Garamond (títulos), Jost (texto) y Barlow Condensed (números de la camiseta) -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<title>Diseñador 3D · NEXO custom</title>
+</head><body>
+<!-- Encabezado con navegación (se repite en las 3 páginas; aria-current marca la página actual) -->
+<header class="top"><div class="wrap"><a class="logo" href="index.html">NEXO<b>custom</b></a>
+<nav aria-label="Principal"><a href="index.html" data-i18n="nav_home" ></a><a href="disenador.html" data-i18n="nav_design" aria-current="page"></a><a href="contacto.html" data-i18n="nav_contact" ></a><button class="lang" type="button" aria-label="Idioma / Language">EN</button></nav></div></header>
+<main class="studio">
+
+<!-- ===== Visor 3D (izquierda): Three.js dibuja el modelo dentro de este <canvas> ===== -->
+<div class="stage" id="stage">
+  <canvas id="gl"></canvas>
+  <div class="msg" id="msg" role="status"></div>
+  <div class="hint" data-i18n="hint"></div>
+  <div class="tools">
+    <button id="vf" type="button" data-i18n="front"></button>
+    <button id="vb" type="button" data-i18n="back"></button>
+    <button id="spin" type="button" aria-pressed="false" data-i18n="spin"></button>
+  </div>
+</div>
+
+<!-- ===== Panel de personalización (derecha) ===== -->
+<aside class="panel">
+  <!-- 1. Prenda -->
+  <fieldset><legend data-i18n="d_sport"></legend>
+    <div class="seg"><button type="button" data-sport="tee" aria-pressed="true" data-i18n="tee"></button><button type="button" data-sport="bask" aria-pressed="false" data-i18n="bask"></button></div>
+    <div id="fitbox" style="margin-top:10px"><div class="seg"><button type="button" data-fit="fan" aria-pressed="true" data-i18n="fan"></button><button type="button" data-fit="player" aria-pressed="false" data-i18n="player"></button></div></div>
+  </fieldset>
+  <!-- 2. Diseños predefinidos (miniaturas creadas por designer.js) -->
+  <fieldset><legend data-i18n="d_pre"></legend><div class="pres" id="presets"></div></fieldset>
+  <!-- 3. Patrón y colores por zona -->
+  <fieldset><legend data-i18n="d_pat"></legend><select id="pat" aria-label="Patrón"></select>
+    <legend style="margin-top:16px" data-i18n="d_col"></legend><div class="cols" id="cols"></div>
+    <!-- Solo fútbol: permite que las mangas lleven el mismo patrón que el cuerpo -->
+    <label class="row" id="slpbox"><input type="checkbox" id="slp"><span data-i18n="f_slp"></span></label></fieldset>
+  <!-- 4. Nombre, número, texto y escudo -->
+  <fieldset><legend data-i18n="d_txt"></legend>
+    <div class="two"><label><span data-i18n="f_name"></span><input id="name" maxlength="14"></label><label><span data-i18n="f_num"></span><input id="num" value="10" inputmode="numeric" maxlength="2"></label></div>
+    <label style="margin-top:10px"><span data-i18n="f_txt"></span><input id="txt" maxlength="20"></label>
+    <label style="margin-top:10px"><span data-i18n="f_crest"></span><input id="crest" type="file" accept="image/*"></label>
+    <button type="button" id="crestrm" class="btn ghost" style="margin-top:8px;padding:8px 16px" data-i18n="f_crest_rm"></button>
+    <!-- Posición y tamaño: también se pueden arrastrar directamente sobre la prenda en el visor 3D -->
+    <p style="margin:18px 0 8px;font-weight:500" data-i18n="pos_help"></p>
+    <div class="seg" id="els"><button type="button" data-el="name" data-i18n="e_name"></button><button type="button" data-el="num" aria-pressed="true" data-i18n="e_num"></button><button type="button" data-el="txt" data-i18n="e_txt"></button><button type="button" data-el="crest" data-i18n="e_crest"></button></div>
+    <div class="sliders"><label><span data-i18n="f_size"></span><input id="esz" type="range" min="0.4" max="2.5" step="0.05" value="1"></label><label><span data-i18n="f_rot"></span><input id="erot" type="range" min="-45" max="45" step="1" value="0"></label></div>
+    <label class="row"><input type="checkbox" id="numf"><span data-i18n="e_numf"></span></label>
+    <button type="button" id="ereset" class="btn ghost" style="margin-top:10px;padding:8px 16px" data-i18n="f_reset"></button></fieldset>
+  <!-- 5. Talle (con tabla de medidas) y cantidad (1 a 20) -->
+  <fieldset><legend data-i18n="d_size"></legend><div class="seg" id="sizes"></div><table id="sztable"></table>
+    <p style="margin:14px 0 6px;font-weight:500" data-i18n="d_qty"></p>
+    <div class="qty"><button type="button" id="qm" aria-label="-">−</button><input id="qty" type="number" min="1" max="20" value="1"><button type="button" id="qp" aria-label="+">+</button></div></fieldset>
+  <!-- 6. Resumen y descargas -->
+  <fieldset style="border:0"><legend data-i18n="d_save"></legend><div class="sum" id="sum"></div>
+    <div class="dls"><button class="btn" id="dl3" type="button" data-i18n="dl3"></button><button class="btn ghost" id="dl2" type="button" data-i18n="dl2"></button></div>
+    <p style="font-size:.9rem" data-i18n="proto"></p></fieldset>
+</aside>
+</main>
+
+<!-- Three.js (motor 3D) y OrbitControls (girar con mouse/dedo): se cargan desde internet -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<!-- Scripts propios. El orden importa: primero textos y patrones, luego modelos, y al final el diseñador -->
+<script src="js/i18n.js"></script>
+<script src="js/patterns.js"></script>
+<script src="js/model-tee.js"></script>   <!-- geometría 3D de la camiseta de fútbol -->
+<script src="js/model-bask.js"></script>  <!-- geometría 3D de la musculosa de básquet -->
+<script src="js/designer.js"></script>
+</body></html>

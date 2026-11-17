@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Tipografías: Cormorant Garamond (títulos), Jost (texto) y Barlow Condensed (números de la camiseta) -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<title>Contacto · NEXO custom</title>
+</head><body>
+<!-- Encabezado con navegación (se repite en las 3 páginas; aria-current marca la página actual) -->
+<header class="top"><div class="wrap"><a class="logo" href="index.html">NEXO<b>custom</b></a>
+<nav aria-label="Principal"><a href="index.html" data-i18n="nav_home" ></a><a href="disenador.html" data-i18n="nav_design" ></a><a href="contacto.html" data-i18n="nav_contact" aria-current="page"></a><button class="lang" type="button" aria-label="Idioma / Language">EN</button></nav></div></header>
+<main class="s"><div class="wrap">
+<h1 style="font-size:clamp(2.4rem,6vw,3.8rem)" data-i18n="ct_h"></h1>
+<p data-i18n="ct_p" style="max-width:56ch"></p>
+<!-- PASO NECESARIO: reemplazá TU_ID por el ID de tu formulario creado en formspree.io -->
+<form class="card" id="f" action="https://formspree.io/f/xnpdaalq" method="POST">
+  <label><span data-i18n="ct_type"></span>
+    <select name="tipo"><option value="Error" data-i18n="ct_err"></option><option value="Mejora" data-i18n="ct_imp"></option><option value="Sugerencia" data-i18n="ct_sug"></option></select></label>
+  <label><span data-i18n="ct_name"></span><input name="nombre" autocomplete="name"></label>
+  <label><span data-i18n="ct_mail"></span><input name="email" type="email" autocomplete="email"></label>
+  <label><span data-i18n="ct_msg"></span><textarea name="mensaje" required maxlength="3000"></textarea></label>
+  <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"> <!-- campo trampa anti-spam -->
+  <button class="btn" type="submit" data-i18n="ct_send"></button>
+  <div id="st" role="status"></div> <!-- acá se muestra el resultado del envío -->
+</form>
+</div></main>
+<!-- Pie de página -->
+<footer><div class="wrap"><span data-i18n="foot"></span><span>© NEXO custom</span></div></footer>
+<script src="js/i18n.js"></script>
+<script>
+/* Envía el formulario a Formspree sin recargar la página */
+document.getElementById('f').onsubmit=async e=>{
+  e.preventDefault();const f=e.target,st=document.getElementById('st');st.className='';
+  if(f.action.includes('TU_ID')){st.className='er';st.textContent=t('ct_cfg');return}   // falta configurar el ID
+  try{
+    const r=await fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}});
+    if(!r.ok)throw 0;st.className='ok';st.textContent=t('ct_ok');f.reset();
+  }catch(x){st.className='er';st.textContent=t('ct_fail')}
+};
+</script>
+</body></html>

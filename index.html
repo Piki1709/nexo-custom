@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Tipografías: Cormorant Garamond (títulos), Jost (texto) y Barlow Condensed (números de la camiseta) -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<title>NEXO custom · Camisetas personalizadas</title>
+<meta name="description" content="Diseñá camisetas de fútbol y básquet en 3D.">
+</head><body>
+<!-- Encabezado con navegación (se repite en las 3 páginas; aria-current marca la página actual) -->
+<header class="top"><div class="wrap"><a class="logo" href="index.html">NEXO<b>custom</b></a>
+<nav aria-label="Principal"><a href="index.html" data-i18n="nav_home" aria-current="page"></a><a href="disenador.html" data-i18n="nav_design" ></a><a href="contacto.html" data-i18n="nav_contact" ></a><button class="lang" type="button" aria-label="Idioma / Language">EN</button></nav></div></header>
+<main>
+<!-- Portada: título, botones y miniaturas clickeables (las genera el script del final) -->
+<section class="hero"><div class="wrap">
+  <div><h1 data-i18n="h_title"></h1><p data-i18n="h_p"></p>
+  <div class="acts"><a class="btn" href="disenador.html" data-i18n="h_cta"></a><a class="btn ghost" href="contacto.html" data-i18n="h_cta2"></a></div></div>
+  <div class="shirts" id="shirts"></div>
+</div></section>
+<!-- Cómo funciona: lista numerada porque es una secuencia de pasos -->
+<section class="s"><div class="wrap"><h2 data-i18n="st_h"></h2>
+<ol class="steps"><li><h3 data-i18n="s1_h"></h3><p data-i18n="s1_p"></p></li><li><h3 data-i18n="s2_h"></h3><p data-i18n="s2_p"></p></li><li><h3 data-i18n="s3_h"></h3><p data-i18n="s3_p"></p></li></ol></div></section>
+<!-- Características -->
+<section class="s" style="padding-top:0"><div class="wrap"><h2 data-i18n="ft_h"></h2>
+<div class="feats"><div data-i18n="f1"></div><div data-i18n="f2"></div><div data-i18n="f3"></div><div data-i18n="f4"></div></div></div></section>
+<!-- Llamado final a la acción -->
+<section class="band"><h2 data-i18n="cta_h"></h2><a class="btn" href="disenador.html" data-i18n="h_cta"></a></section>
+</main>
+<!-- Pie de página -->
+<footer><div class="wrap"><span data-i18n="foot"></span><span>© NEXO custom</span></div></footer>
+<script src="js/i18n.js"></script>   <!-- traducciones ES/EN -->
+<script src="js/patterns.js"></script> <!-- diseños predefinidos -->
+<script>
+/* Dibuja 6 miniaturas en la portada; cada una abre el diseñador con ese diseño ya aplicado */
+document.addEventListener('DOMContentLoaded',()=>{
+  const g=document.getElementById('shirts');
+  [6,3,8,5,9,11].forEach((p,j)=>{
+    const a=document.createElement('a'),s=j%2?'bask':'tee',D=NX.PRE[p];   // alterna camiseta / musculosa
+    a.href='disenador.html?s='+s+'&p='+p;
+    a.innerHTML='<canvas width="240" height="240"></canvas>';
+    NX.mini(a.firstChild,s,D.p,D.c,D.c.sl);g.append(a);
+  });
+});
+</script>
+</body></html>

@@ -1,0 +1,108 @@
+/* =====================================================================
+   NEXO custom · Hoja de estilos compartida por las 3 páginas
+   Paleta "Gilded Noir": negro, carbón, oro antiguo, champagne y marfil.
+   Para cambiar la paleta del sitio, editá solo las variables de :root.
+   ===================================================================== */
+:root{
+  --noir:#111111;   /* negro principal (fondos oscuros) */
+  --char:#2E2E2E;   /* carbón (fondos secundarios) */
+  --gold:#C9A84C;   /* oro antiguo (acentos y bordes) */
+  --champ:#E8D6B3;  /* champagne (textos sobre oscuro) */
+  --ivory:#F8F5EF;  /* marfil (fondos claros) */
+  --gold-grad:linear-gradient(135deg,#E8D6B3 0%,#C9A84C 48%,#A8842F 100%); /* degradé dorado de botones */
+  --hair:1px solid rgba(201,168,76,.55);  /* línea fina dorada */
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+/* IMPORTANTE: sin esto, un elemento con display propio (grid/flex) ignora el atributo "hidden" */
+[hidden]{display:none!important}
+body{margin:0;font:400 1rem/1.6 Jost,system-ui,sans-serif;color:var(--noir);background:var(--ivory)}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;line-height:1.05;margin:0 0 .5em}
+h1{font-size:clamp(2.8rem,7vw,5rem)}h2{font-size:clamp(2rem,4.5vw,3rem)}h3{font-size:1.5rem}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}   /* foco visible para teclado */
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ---------- Encabezado y navegación ---------- */
+header.top{position:sticky;top:0;z-index:20;background:var(--noir);color:var(--ivory);border-bottom:var(--hair)}
+header.top .wrap{display:flex;align-items:center;gap:18px;height:64px}
+.logo{font:600 1.7rem "Cormorant Garamond",serif;letter-spacing:.22em;text-decoration:none;color:var(--ivory)}
+.logo b{font-weight:500;color:var(--gold);letter-spacing:.12em;margin-left:.4em}
+nav{display:flex;gap:4px;margin-left:auto;align-items:center}
+nav a,.lang{color:var(--champ);text-decoration:none;padding:8px 14px;font:500 .95rem Jost,sans-serif;background:none;border:0;cursor:pointer;border-bottom:2px solid transparent}
+nav a:hover,nav a[aria-current]{color:var(--gold);border-bottom-color:var(--gold)}
+.lang{border:var(--hair);border-radius:4px;margin-left:8px}.lang:hover{background:rgba(201,168,76,.15)}
+
+/* ---------- Botones ---------- */
+.btn{display:inline-block;background:var(--gold-grad);color:var(--noir);font:600 1rem Jost,sans-serif;letter-spacing:.04em;padding:14px 30px;border:0;border-radius:2px;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:inherit;border:var(--hair)}
+
+/* ---------- Portada (index.html) ---------- */
+.hero{background:radial-gradient(circle at 75% 30%,var(--char),var(--noir) 70%);color:var(--ivory);padding:72px 0}
+.hero h1{color:var(--ivory)}.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+.hero p{font-size:1.2rem;color:var(--champ);max-width:36ch}.hero .acts{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.shirts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}   /* miniaturas de camisetas clickeables */
+.shirts a{background:var(--ivory);border:var(--hair);padding:10px;display:block;transition:transform .2s}
+.shirts a:hover{transform:translateY(-4px)}.shirts canvas{width:100%;height:auto;display:block}
+section.s{padding:72px 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;counter-reset:n;padding:0;list-style:none}
+.steps li{counter-increment:n;border-top:var(--hair);padding-top:16px}
+.steps li:before{content:counter(n);font:600 3rem "Cormorant Garamond",serif;color:var(--gold)}
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px}
+.feats div{border-top:var(--hair);padding:18px 0;font-size:1.1rem}
+.band{background:var(--char);color:var(--ivory);text-align:center;padding:64px 20px;border-top:var(--hair)}.band h2{color:var(--ivory)}
+footer{background:var(--noir);color:var(--champ);padding:28px 0;font-size:.9rem;border-top:var(--hair)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---------- Formulario de contacto ---------- */
+form.card{max-width:640px;display:grid;gap:18px;background:#fff;border:var(--hair);padding:28px;margin-top:28px}
+label{font-weight:500;display:grid;gap:6px}
+input,select,textarea{font:inherit;padding:12px;border:1px solid #cfc7b4;border-radius:2px;width:100%;background:#fff;color:var(--noir)}
+textarea{min-height:150px;resize:vertical}
+#st{min-height:1.5em;font-weight:600}.ok{color:#1c6b3a}.er{color:#a4262c}
+.hp{position:absolute;left:-9999px}   /* campo trampa anti-spam (oculto a personas) */
+
+/* ---------- Diseñador (disenador.html) ---------- */
+.studio{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(340px,.75fr);height:calc(100vh - 64px)}
+.stage{position:relative;min-height:0;background:radial-gradient(circle at 50% 38%,#4a4a4a 0%,var(--char) 38%,var(--noir) 100%)}
+#gl{width:100%;height:100%;display:block;touch-action:none}   /* aquí dibuja Three.js el modelo 3D */
+.msg{position:absolute;top:16px;left:16px;right:16px;text-align:center;color:var(--champ);font-weight:500;pointer-events:none}
+.hint{position:absolute;top:44px;left:0;right:0;text-align:center;color:rgba(232,214,179,.6);font-size:.85rem;pointer-events:none}
+.tools{position:absolute;left:12px;right:12px;bottom:14px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tools button,.seg button{font:500 .95rem Jost,sans-serif;padding:8px 18px;border:var(--hair);background:rgba(17,17,17,.75);color:var(--champ);cursor:pointer;border-radius:2px}
+.tools button[aria-pressed=true],.seg button[aria-pressed=true]{background:var(--gold-grad);color:var(--noir);border-color:var(--gold)}
+.panel{overflow:auto;padding:18px 24px 40px;background:var(--ivory);border-left:var(--hair)}
+.panel fieldset{border:0;border-bottom:var(--hair);margin:0;padding:18px 0}
+.panel legend{font:600 1.5rem "Cormorant Garamond",serif;padding:0;margin-bottom:10px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}.seg button{background:#fff;color:var(--noir)}
+.pres{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pre{background:#fff;border:var(--hair);padding:6px;cursor:pointer;font:500 .78rem Jost,sans-serif;color:var(--noir)}
+.pre:hover,.pre:focus-visible{border-color:var(--noir);background:var(--champ)}.pre canvas{width:100%;display:block}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cols label{grid-template-columns:44px 1fr;align-items:center;font-weight:400;font-size:.92rem}
+.cols input{padding:0;height:40px;cursor:pointer}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.two label{font-size:.92rem}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:12px}
+th,td{padding:7px 8px;border-bottom:1px solid #ddd3bd;text-align:left}tr.on td{background:var(--champ);font-weight:600}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:42px;height:42px;border:var(--hair);background:#fff;font-size:1.4rem;cursor:pointer}
+.qty input{width:70px;text-align:center}
+.sum{background:var(--champ);padding:12px;margin:10px 0;font-weight:500}.dls{display:grid;gap:10px}
+
+/* ---------- Adaptación a celulares y tablets ---------- */
+@media(max-width:860px){
+  .hero .wrap,.steps,.feats{grid-template-columns:1fr}
+  .studio{display:block;height:auto}
+  .stage{position:sticky;top:64px;height:52vh;z-index:5}   /* el visor 3D queda fijo arriba al hacer scroll */
+  .panel{border:0}
+}
+@media(max-width:480px){.pres{grid-template-columns:repeat(3,1fr)}.cols{grid-template-columns:1fr}nav a{padding:8px 8px}.logo{letter-spacing:.12em}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+
+/* ---------- Posición y tamaño de textos / escudo ---------- */
+.row{display:flex;align-items:center;gap:10px;font-weight:400;margin-top:12px}   /* casilla + texto en una línea */
+.row input{width:auto;accent-color:var(--gold)}
+.sliders{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.sliders label{font-size:.92rem}
+input[type=range]{padding:0;accent-color:var(--gold)}
+#gl{cursor:grab}#gl:active{cursor:grabbing}
